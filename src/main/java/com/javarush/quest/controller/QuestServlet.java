@@ -24,8 +24,8 @@ public class QuestServlet extends BaseServlet {
     protected Response handleGet(HttpServletRequest request) {
         Long userId = ((User) request.getAttribute(Key.USER)).getId();
         String questId = request.getParameter(Key.ID);
-        Optional<Game> game = gameService.loadGame(userId, questId);
 
+        Optional<Game> game = gameService.findGame(userId, questId);
         if (game.isPresent()) {
             String sceneId = game.get().getCurrentSceneId();
             return Response.redirect(Url.SCENE).withParam(Key.ID, sceneId);

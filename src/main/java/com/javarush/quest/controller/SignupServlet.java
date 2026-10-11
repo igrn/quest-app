@@ -22,8 +22,6 @@ public class SignupServlet extends BaseServlet {
         User user = userService.createUser(login, password);
 
         request.getSession().setAttribute(Key.USER, user);
-        return Response
-                .redirect(Url.USERS)
-                .withParam(Key.ID, user.getId());
+        return Response.redirect(Url.USERS).withParam(Key.ID, user.getId());
     }
 }

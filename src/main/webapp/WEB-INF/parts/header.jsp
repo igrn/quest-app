@@ -42,7 +42,6 @@
                             <c:param name="id" value="${user.id}"/>
                         </c:url>
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#">Создать квест</a></li>
                             <li class="nav-item"><a class="nav-link" href="${profileUrl}">Профиль</a></li>
                         </ul>
                         <a class="btn btn-danger ms-md-2" role="button" href="<c:url value="${Url.LOGOUT}"/>">Выйти</a>

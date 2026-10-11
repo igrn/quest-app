@@ -18,8 +18,6 @@ public sealed interface Response {
         }
     }
 
-    //todo check isJsp here or in BaseServlet?
-    //check for target.endsWith(".jsp") instead to allow /foo/bar.jsp or foo/bar.jsp ?
     static Response forward(String target) {
         return new Forward(target, !target.startsWith("/"));
     }

@@ -14,7 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUser(String login, String password) {
-        return userRepository.findBy(login, password)
+        return userRepository.findFirstBy(login, password)
                 .orElseThrow(() -> new SecurityException(INVALID_CREDENTIALS));
     }
 
@@ -23,10 +23,7 @@ public class UserService {
     }
 
     public User createUser(String login, String password) {
-        User user = User.builder()
-                .login(login)
-                .password(password)
-                .build();
+        User user = User.builder().login(login).password(password).build();
         return userRepository.save(user);
     }
 }

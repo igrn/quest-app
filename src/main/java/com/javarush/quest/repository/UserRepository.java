@@ -16,7 +16,7 @@ public class UserRepository extends BaseRepository<User, Long> {
         return id.getAndIncrement();
     }
 
-    public Optional<User> findBy(String login, String password) {
+    public Optional<User> findFirstBy(String login, String password) {
         return map.values().stream()
                 .filter(user -> user.getLogin().equals(login))
                 .filter(user -> user.getPassword().equals(password))

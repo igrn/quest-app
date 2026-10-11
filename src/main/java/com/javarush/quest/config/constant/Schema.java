@@ -16,6 +16,7 @@ public final class Schema {
         public static final String SIGNUP = "signup";
         public static final String USER = "user";
         public static final String USERS = "users";
+        public static final String USER_STATS = "userStats";
 
         private Key() {
             throw new UnsupportedOperationException(UTILITY_CLASS);
