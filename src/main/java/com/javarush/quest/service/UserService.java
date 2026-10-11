@@ -2,9 +2,11 @@ package com.javarush.quest.service;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.User;
-import com.javarush.quest.exception.EntityNotFoundException;
+import com.javarush.quest.exception.impl.SecurityException;
 import com.javarush.quest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import static com.javarush.quest.exception.ErrorMessage.INVALID_CREDENTIALS;
 
 @Component
 @RequiredArgsConstructor
@@ -13,7 +15,7 @@ public class UserService {
 
     public User getUser(String login, String password) {
         return userRepository.findBy(login, password)
-                .orElseThrow(() -> EntityNotFoundException.of(User.class));
+                .orElseThrow(() -> new SecurityException(INVALID_CREDENTIALS));
     }
 
     public void createUser(User user) {

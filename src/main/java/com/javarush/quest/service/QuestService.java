@@ -2,7 +2,7 @@ package com.javarush.quest.service;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.Quest;
-import com.javarush.quest.exception.EntityNotFoundException;
+import com.javarush.quest.exception.impl.NotFoundException;
 import com.javarush.quest.repository.QuestRepository;
 import com.javarush.quest.repository.SceneRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class QuestService {
 
     public Quest getQuest(String questId) {
         return questRepository.findById(questId)
-                .orElseThrow(() -> EntityNotFoundException.of(Quest.class));
+                .orElseThrow(() -> NotFoundException.of(Quest.class));
     }
 
     public Collection<Quest> getQuests() {

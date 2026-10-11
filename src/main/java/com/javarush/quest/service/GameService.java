@@ -4,7 +4,7 @@ import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.Game;
 import com.javarush.quest.entity.GameState;
 import com.javarush.quest.entity.Scene;
-import com.javarush.quest.exception.EntityNotFoundException;
+import com.javarush.quest.exception.impl.NotFoundException;
 import com.javarush.quest.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ public class GameService {
 
     public void saveGame(Long userId, Scene currentScene) {
         Game game = gameRepository.findBy(userId, currentScene.getQuestId())
-                .orElseThrow(() -> EntityNotFoundException.of(Game.class));
+                .orElseThrow(() -> NotFoundException.of(Game.class));
 
         game.setGameState(currentScene.getGameState());
         game.setCurrentSceneId(currentScene.getId());

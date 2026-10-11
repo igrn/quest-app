@@ -40,7 +40,7 @@ public final class Schema {
     }
 
     public static final class Jsp {
-        public static final String JSP_FORMAT = "/WEB-INF/%s.jsp";
+        public static final String FORMAT = "/WEB-INF/%s.jsp";
 
         public static final String ERROR = "error";
         public static final String HOME = "home";

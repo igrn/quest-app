@@ -9,7 +9,9 @@ import com.javarush.quest.entity.User;
 import com.javarush.quest.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Servlet(Url.LOGIN)
 @RequiredArgsConstructor
 public class LoginServlet extends BaseServlet {
@@ -20,7 +22,9 @@ public class LoginServlet extends BaseServlet {
         String login = request.getParameter(Key.LOGIN);
         String password = request.getParameter(Key.PASSWORD);
         User user = userService.getUser(login, password);
+
         request.getSession().setAttribute(Key.USER, user);
+        log.info("User {} logged in", user.getLogin());
         return Response.redirect(Url.HOME);
     }
 }

@@ -1,7 +1,6 @@
 package com.javarush.quest.util;
 
 import com.javarush.quest.config.annotation.Component;
-import com.javarush.quest.exception.ErrorMessage;
 import com.javarush.quest.util.data.DataParser;
 import com.javarush.quest.util.data.JsonParser;
 import com.javarush.quest.util.data.YamlParser;
@@ -11,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.javarush.quest.exception.ErrorMessage.UNSUPPORTED_FILE;
 
 @Component
 public class ResourceLoader {
@@ -45,8 +46,7 @@ public class ResourceLoader {
         return parsers.stream()
                 .filter(parser -> parser.canParse(resource))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        ErrorMessage.UNSUPPORTED_FILE + resource));
+                .orElseThrow(() -> new IllegalArgumentException(UNSUPPORTED_FILE + resource));
     }
 
     private InputStream mapResourceToStream(String resource) {

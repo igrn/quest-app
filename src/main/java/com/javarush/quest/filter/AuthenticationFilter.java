@@ -8,10 +8,12 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.Optional;
 
+@Slf4j
 @Priority(2)
 @WebFilter({Url.QUEST, Url.SCENE, Url.USERS})
 public class AuthenticationFilter implements Filter {
@@ -31,7 +33,7 @@ public class AuthenticationFilter implements Filter {
             req.setAttribute(Key.USER, user);
             chain.doFilter(request, response);
         } else {
-            //todo logging
+            log.warn("User is not in session");
             resp.sendRedirect(req.getContextPath() + Url.LOGIN);
         }
     }

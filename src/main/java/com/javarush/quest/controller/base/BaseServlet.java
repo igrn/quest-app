@@ -84,7 +84,7 @@ public abstract class BaseServlet extends HttpServlet implements ServletMetadata
     }
 
     private String buildPathToJsp(String jsp) {
-        return String.format(Jsp.JSP_FORMAT, jsp);
+        return String.format(Jsp.FORMAT, jsp);
     }
 
     private String buildRedirectUrl(String target, Map<String, String> queryParams) {
