@@ -5,6 +5,7 @@ import static com.javarush.quest.exception.ErrorMessage.UTILITY_CLASS;
 public final class Schema {
 
     public static final class Key {
+        public static final String ERROR_MESSAGE = "errorMessage";
         public static final String ID = "id";
         public static final String LOGIN = "login";
         public static final String LOGOUT = "logout";

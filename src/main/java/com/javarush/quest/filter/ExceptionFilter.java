@@ -1,6 +1,7 @@
 package com.javarush.quest.filter;
 
 import com.javarush.quest.config.constant.Schema.Jsp;
+import com.javarush.quest.config.constant.Schema.Key;
 import com.javarush.quest.config.constant.Schema.Url;
 import com.javarush.quest.exception.AppException;
 import jakarta.annotation.Priority;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
+import static com.javarush.quest.exception.ErrorMessage.SERVER_ERROR;
 
 @Slf4j
 @Priority(1)
@@ -28,13 +31,17 @@ public class ExceptionFilter implements Filter {
         try {
             chain.doFilter(request, response);
         } catch (AppException e) {
+            resp.setStatus(e.getHttpStatus());
+            req.setAttribute(Key.ERROR_MESSAGE, e.getErrorMessage());
+
             String message = "Client request failed. Status: {}, Reason: {}";
             log.warn(message, e.getHttpStatus(), e.getMessage());
-            resp.setStatus(e.getHttpStatus());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         } catch (Throwable t) {
-            log.error("Critical system error occurred during request execution.", t);
             resp.setStatus(HttpURLConnection.HTTP_INTERNAL_ERROR);
+            req.setAttribute(Key.ERROR_MESSAGE, SERVER_ERROR);
+
+            log.error("Critical system error occurred during request execution", t);
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }

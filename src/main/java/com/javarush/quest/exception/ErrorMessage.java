@@ -1,6 +1,7 @@
 package com.javarush.quest.exception;
 
 public final class ErrorMessage {
+    //Exception messages
     public static final String ANNOTATION_REQUIRED = "No @Servlet annotation for class: %s";
     public static final String CANNOT_CREATE_BEAN = "Cannot create bean for class: ";
     public static final String CANNOT_SCAN_PACKAGE = "Cannot scan package: ";
@@ -13,6 +14,11 @@ public final class ErrorMessage {
     public static final String STARTUP_FAILED = "Application startup failed";
     public static final String UNSUPPORTED_FILE = "Cannot find appropriate parser for: ";
     public static final String UTILITY_CLASS = "This is a utility class and cannot be instantiated";
+
+    //Http status messages
+    public static final String AUTHENTICATION_REQUIRED = "Authentication Required";
+    public static final String RESOURCE_NOT_FOUND = "Resource not found";
+    public static final String SERVER_ERROR = "Internal Server Error";
 
     private ErrorMessage() {
         throw new UnsupportedOperationException(UTILITY_CLASS);
