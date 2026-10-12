@@ -19,7 +19,7 @@
                     </c:url>
                     <a class="stretched-link" href="${questUrl}"></a>
                     <img class="img-fluid aspect-ratio-16x9 object-fit-cover rounded d-block w-100"
-                         src="<c:url value="/assets/img/spaceship.jpg"/>" alt="${quest.name}">
+                         src="<c:url value="/assets/img/${quest.id}.webp"/>" alt="${quest.name}">
                     <div class="py-4">
                         <h4>${quest.name}</h4>
                         <p>${quest.description}</p>

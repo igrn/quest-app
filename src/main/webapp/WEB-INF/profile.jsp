@@ -7,9 +7,9 @@
 <%@ include file="parts/header.jsp" %>
 <div class="container flex-grow-1 py-4">
     <h1>${user.login}</h1>
-    <p><span>Закончено игр: </span>${userStats.playedGames}</p>
-    <p><span>Победы: </span>${userStats.wins}</p>
-    <p><span>Поражения: </span>${userStats.losses}</p>
+    <p class="lead"><span>Квестов закончено: </span>${userStats.playedGames}</p>
+    <p class="lead"><span>Победы: </span>${userStats.wins}</p>
+    <p class="lead"><span>Поражения: </span>${userStats.losses}</p>
     <a class="btn btn-secondary text-nowrap" role="button"
        href="<c:url value="${Url.HOME}"/>">На главную</a>
 </div>

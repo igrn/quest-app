@@ -26,9 +26,8 @@ public class StatsService {
                         () -> new EnumMap<>(GameState.class),
                         Collectors.counting()
                 ));
-        long total = playedGames.values().stream().mapToLong(Long::longValue).sum();
         long wins = playedGames.getOrDefault(WON, 0L);
         long losses = playedGames.getOrDefault(LOST, 0L);
-        return new UserStats(total, wins, losses);
+        return new UserStats(wins + losses, wins, losses);
     }
 }

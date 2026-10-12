@@ -24,7 +24,7 @@ public class LoginServlet extends BaseServlet {
         User user = userService.getUser(login, password);
 
         request.getSession().setAttribute(Key.USER, user);
-        log.info("User {} logged in", user.getLogin());
+        log.info("User {} with id {} logged in", user.getLogin(), user.getId());
         return Response.redirect(Url.HOME);
     }
 }
