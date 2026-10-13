@@ -13,6 +13,11 @@
         </div>
         <div class="row d-flex justify-content-center">
             <div class="col-md-6 col-xl-4">
+                <c:if test="${pageContext.response.status == 401}">
+                    <div class="alert alert-danger text-center" role="alert">
+                        <span>Неверный логин или пароль.</span>
+                    </div>
+                </c:if>
                 <div class="card bg-dark-subtle mb-5">
                     <div class="card-body d-flex flex-column align-items-center">
                         <div class="bs-icon-sm bs-icon-circle bs-icon-primary my-4 bs-icon">

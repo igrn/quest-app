@@ -4,6 +4,7 @@ import com.javarush.quest.config.constant.Schema.Jsp;
 import com.javarush.quest.config.constant.Schema.Key;
 import com.javarush.quest.config.constant.Schema.Url;
 import com.javarush.quest.exception.AppException;
+import com.javarush.quest.exception.impl.InvalidCredentialsException;
 import jakarta.annotation.Priority;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -21,6 +22,9 @@ import static com.javarush.quest.exception.ErrorMessage.SERVER_ERROR;
 @WebFilter(Url.WILDCARD)
 public class ExceptionFilter implements Filter {
     private static final String ERROR_JSP = String.format(Jsp.FORMAT, Jsp.ERROR);
+    private static final String LOGIN_JSP = String.format(Jsp.FORMAT, Jsp.LOGIN);
+
+    private record ErrorDetails(int status, String errorMessage, String targetJsp) {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -30,19 +34,36 @@ public class ExceptionFilter implements Filter {
 
         try {
             chain.doFilter(request, response);
+        } catch (InvalidCredentialsException e) {
+            ErrorDetails error = new ErrorDetails(
+                    e.getHttpStatus(), e.getErrorMessage(), LOGIN_JSP);
+
+            log.warn("Authentication failed: invalid credentials provided");
+            forwardToErrorPage(req, resp, error);
         } catch (AppException e) {
-            resp.setStatus(e.getHttpStatus());
-            req.setAttribute(Key.ERROR_MESSAGE, e.getErrorMessage());
+            ErrorDetails error = new ErrorDetails(
+                    e.getHttpStatus(), e.getErrorMessage(), ERROR_JSP);
 
             String message = "Client request failed. Status: {}, Reason: {}";
             log.warn(message, e.getHttpStatus(), e.getMessage());
-            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
-        } catch (Throwable t) {
-            resp.setStatus(HttpURLConnection.HTTP_INTERNAL_ERROR);
-            req.setAttribute(Key.ERROR_MESSAGE, SERVER_ERROR);
+            forwardToErrorPage(req, resp, error);
+        } catch (Exception e) {
+            int status = HttpURLConnection.HTTP_INTERNAL_ERROR;
+            ErrorDetails error = new ErrorDetails(status, SERVER_ERROR, ERROR_JSP);
 
-            log.error("Critical system error occurred during request execution", t);
-            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
+            log.error("Critical system error occurred during request execution", e);
+            forwardToErrorPage(req, resp, error);
+        }
+    }
+
+    private void forwardToErrorPage(HttpServletRequest req, HttpServletResponse resp,
+                                    ErrorDetails error) throws ServletException, IOException {
+        if (!resp.isCommitted()) {
+            resp.setStatus(error.status());
+            req.setAttribute(Key.ERROR_MESSAGE, error.errorMessage());
+            req.getRequestDispatcher(error.targetJsp()).forward(req, resp);
+        } else {
+            log.error("Response already committed. Cannot forward to target: {}", error.targetJsp());
         }
     }
 }

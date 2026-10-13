@@ -5,7 +5,7 @@ import com.javarush.quest.config.constant.Schema.Key;
 import com.javarush.quest.config.constant.Schema.Url;
 import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.controller.base.Response.Redirect;
-import com.javarush.quest.exception.impl.NotFoundException;
+import com.javarush.quest.exception.impl.EntityNotFoundException;
 import com.javarush.quest.repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +59,7 @@ class QuestServletIT extends BaseIT {
     @DisplayName("When quest not found then throw")
     void whenQuestNotFoundThenThrow() {
         when(request.getParameter(Key.ID)).thenReturn("invalid");
-        assertThrows(NotFoundException.class, () -> questServlet.handleGet(request));
+        assertThrows(EntityNotFoundException.class, () -> questServlet.handleGet(request));
     }
 
     @Test

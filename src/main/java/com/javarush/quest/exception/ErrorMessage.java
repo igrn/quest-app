@@ -16,9 +16,9 @@ public final class ErrorMessage {
     public static final String UTILITY_CLASS = "This is a utility class and cannot be instantiated";
 
     //Http status messages
-    public static final String AUTHENTICATION_REQUIRED = "Authentication Required";
-    public static final String RESOURCE_NOT_FOUND = "Resource not found";
+    public static final String RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String SERVER_ERROR = "Internal Server Error";
+    public static final String UNAUTHORIZED = "Unauthorized";
 
     private ErrorMessage() {
         throw new UnsupportedOperationException(UTILITY_CLASS);

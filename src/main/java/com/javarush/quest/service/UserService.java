@@ -2,7 +2,7 @@ package com.javarush.quest.service;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.User;
-import com.javarush.quest.exception.impl.SecurityException;
+import com.javarush.quest.exception.impl.InvalidCredentialsException;
 import com.javarush.quest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ public class UserService {
 
     public User getUser(String login, String password) {
         return userRepository.findFirstBy(login, password)
-                .orElseThrow(() -> new SecurityException(INVALID_CREDENTIALS));
+                .orElseThrow(() -> new InvalidCredentialsException(INVALID_CREDENTIALS));
     }
 
     public void createUser(User user) {
